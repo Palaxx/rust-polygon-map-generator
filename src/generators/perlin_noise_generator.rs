@@ -36,7 +36,7 @@ impl NoiseGenerator for PerlinNG {
             frequency *= 2.0;
         }
 
-        (noise_value / max_value + 1.0 ) *128.0
+        (noise_value / max_value + 1.0 ) *50.0
     }
 
 }

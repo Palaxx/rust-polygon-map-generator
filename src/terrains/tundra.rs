@@ -1,15 +1,15 @@
 use crate::terrains::terrain::Terrain;
 
-pub struct Water {
+pub struct Tundra {
 
 }
 
-impl Terrain for Water {
+impl Terrain for Tundra {
     fn get_color(&self) -> [u8; 3] {
-        [0, 0, 128]
+        [187, 187, 170]
     }
 
     fn get_name(&self) -> &'static str {
-        "water"
+        "tundra"
     }
 }
