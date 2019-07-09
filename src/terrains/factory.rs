@@ -42,9 +42,9 @@ impl TerrainFactory for Factory {
     }
 
     fn make_from_elevation_and_moisture(&self, elevation: u64, moisture: u64) -> Box<Terrain> {
-        if elevation < 10 {
+        if elevation < 15 {
             Box::new(Water {})
-        } else if elevation < 12 {
+        } else if elevation < 17 {
             Box::new(Beach {})
         } else if elevation > 80 {
             if moisture < 10 {
