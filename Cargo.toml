@@ -9,4 +9,5 @@ edition = "2018"
 [dependencies]
 noise="0.5.1"
 image = "0.21.2"
+structopt = "0.2.18"
 

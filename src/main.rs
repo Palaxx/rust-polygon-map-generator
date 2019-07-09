@@ -1,17 +1,21 @@
+extern crate map_generator;
+
 use image::{RgbImage, ImageBuffer};
 use map_generator::generators::perlin_noise_generator::PerlinNG;
 use map_generator::generators::NoiseGenerator;
 use map_generator::terrains::factory::Factory;
 use map_generator::terrains::TerrainFactory;
+use map_generator::options::Options;
 
-extern crate map_generator;
 
 fn main() {
+    let opt = Options::from_args();
     let size: u8 = 100;
     let octaves = 6;
+
     let mut noise = Vec::new();
-    let elevation_generator: PerlinNG = PerlinNG::new(octaves, 0.5, 24);
-    let moisture_generator: PerlinNG = PerlinNG::new(octaves, 0.5, 321);
+    let elevation_generator: PerlinNG = PerlinNG::new(octaves, 0.5, 111);
+    let moisture_generator: PerlinNG = PerlinNG::new(octaves, 0.5, 12);
     for x in 0..size {
         for y in 0..size {
             let pos_x = x as f64 / size as f64;
