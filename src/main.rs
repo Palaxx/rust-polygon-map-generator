@@ -1,5 +1,7 @@
+#[macro_use] extern crate structopt;
 extern crate map_generator;
 
+use structopt::StructOpt;
 use image::{RgbImage, ImageBuffer};
 use map_generator::generators::perlin_noise_generator::PerlinNG;
 use map_generator::generators::NoiseGenerator;
@@ -7,15 +9,15 @@ use map_generator::terrains::factory::Factory;
 use map_generator::terrains::TerrainFactory;
 use map_generator::options::Options;
 
-
 fn main() {
-    let opt = Options::from_args();
-    let size: u8 = 100;
-    let octaves = 6;
-
+    let opt: Options = Options::from_args();
+    let size = opt.get_length();
+    let octaves = opt.get_octaves();
+    let seed = opt.get_seed();
     let mut noise = Vec::new();
-    let elevation_generator: PerlinNG = PerlinNG::new(octaves, 0.5, 111);
-    let moisture_generator: PerlinNG = PerlinNG::new(octaves, 0.5, 12);
+    let elevation_generator: PerlinNG = PerlinNG::new(octaves, 0.5, seed);
+    let moisture_generator: PerlinNG = PerlinNG::new(octaves, 0.5, seed + 50);
+
     for x in 0..size {
         for y in 0..size {
             let pos_x = x as f64 / size as f64;
