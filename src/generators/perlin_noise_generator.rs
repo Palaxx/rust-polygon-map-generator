@@ -1,4 +1,4 @@
-use crate::generators::NoiseGenerator;
+use crate::generators::noise_generator_trait::NoiseGenerator;
 use noise::{Perlin, NoiseFn, Seedable};
 
 pub struct PerlinNG {

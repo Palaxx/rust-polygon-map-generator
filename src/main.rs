@@ -33,11 +33,10 @@ fn main() {
         }
     }
 //    println!("{:?}", noise);
-    print_image(size as u32, noise, octaves);
+    print_image(size as u32, noise, seed);
 }
 
-fn print_image(size: u32, noise: Vec<(u64, u64)>, octaves: u8) {
-    let img: RgbImage = ImageBuffer::new(size, size);
+fn print_image(size: u32, noise: Vec<(u64, u64)>, seed: u32) {
     let terrain_factory: Factory = Factory {};
     let mut img = ImageBuffer::from_fn(size * 10 , size * 10, |x, y| {
         let index: u64 = (size  * (y / 10) + x / 10) as u64;
@@ -46,6 +45,6 @@ fn print_image(size: u32, noise: Vec<(u64, u64)>, octaves: u8) {
         let rgb = terrain_factory.make_from_elevation_and_moisture(elevation, moisture);
         image::Rgb(rgb.get_color())
     });
-    let number = octaves.to_owned();
+    let number = seed.to_owned();
     img.save(format!("test{}.png", number)).unwrap();
 }
