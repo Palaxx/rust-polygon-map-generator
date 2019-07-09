@@ -4,10 +4,13 @@ extern crate map_generator;
 use structopt::StructOpt;
 use image::{RgbImage, ImageBuffer};
 use map_generator::generators::perlin_noise_generator::PerlinNG;
-use map_generator::generators::NoiseGenerator;
+use map_generator::generators::noise_generator_trait::NoiseGenerator;
 use map_generator::terrains::factory::Factory;
 use map_generator::terrains::TerrainFactory;
 use map_generator::options::Options;
+use map_generator::terrains::terrain::Terrain;
+use map_generator::drawers::drawer_trait::Drawer;
+use map_generator::drawers::color_drawer::ColorDrawer;
 
 fn main() {
     let opt: Options = Options::from_args();
@@ -26,25 +29,27 @@ fn main() {
             let elevation_value = elevation_generator.generate(pos_x, pos_y);
             let moisture_value = moisture_generator.generate(pos_x, pos_y);
 
-//            if elevation_value < 20.0 {
-//                println!("{},{}", elevation_value, moisture_value)
-//            }
             noise.push((elevation_value as u64, moisture_value as u64)) ;
         }
     }
-//    println!("{:?}", noise);
-    print_image(size as u32, noise, seed);
+    let terrains = build_terrains(noise);
+    print_image(seed, size as u32, terrains);
 }
 
-fn print_image(size: u32, noise: Vec<(u64, u64)>, seed: u32) {
+fn build_terrains(noise: Vec<(u64, u64)>) -> Vec<Box<Terrain>> {
     let terrain_factory: Factory = Factory {};
-    let mut img = ImageBuffer::from_fn(size * 10 , size * 10, |x, y| {
-        let index: u64 = (size  * (y / 10) + x / 10) as u64;
-        let elevation: u64 = noise[index as usize].0;
-        let moisture: u64 = noise[index as usize].1;
-        let rgb = terrain_factory.make_from_elevation_and_moisture(elevation, moisture);
-        image::Rgb(rgb.get_color())
-    });
-    let number = seed.to_owned();
-    img.save(format!("test{}.png", number)).unwrap();
+    let mut terrains: Vec<Box<Terrain>> = Vec::new();
+    for n in &noise {
+        let elevation: u64 = n.0;
+        let moisture: u64 = n.1;
+        let terrain = terrain_factory.make_from_elevation_and_moisture(elevation, moisture);
+        terrains.push(terrain);
+    };
+    terrains
+}
+
+fn print_image(seed: u32, size: u32, terrains: Vec<Box<Terrain>>) {
+    let color_drawer: ColorDrawer = ColorDrawer {};
+    let filename: String = format!("seed_{}.png", seed.to_owned());
+    color_drawer.draw(filename, size, terrains);
 }

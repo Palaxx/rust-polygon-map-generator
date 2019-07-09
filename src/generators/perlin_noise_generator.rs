@@ -28,7 +28,7 @@ impl NoiseGenerator for PerlinNG {
         let mut noise_value = 0.0;
 
         for _octave in 0..self._octaves {
-            let new_noise_value = perlin.get([x* frequency, y * frequency]) * amplitude;
+            let new_noise_value = perlin.get([x * frequency, y * frequency]) * amplitude;
 //            println!("N {}, MAX {}, AM {}, FR {}", noise_value, max_value, amplitude, frequency);
             noise_value += new_noise_value;
             max_value += amplitude;
@@ -36,7 +36,7 @@ impl NoiseGenerator for PerlinNG {
             frequency *= 2.0;
         }
 
-        (noise_value / max_value + 1.0 ) *50.0
+        ((noise_value / max_value  ) + 1.0) * 50.0
     }
 
 }

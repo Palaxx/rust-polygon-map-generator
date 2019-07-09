@@ -12,7 +12,7 @@ mod taiga;
 mod temperate_decidiuos_forest;
 mod temperate_desert;
 mod temperate_rain_forest;
-mod terrain;
+pub mod terrain;
 mod tropical_rain_forest;
 mod tropical_seasonal_forest;
 mod tundra;

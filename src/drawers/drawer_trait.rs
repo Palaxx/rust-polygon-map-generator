@@ -1,3 +1,5 @@
+use crate::terrains::terrain::Terrain;
+
 pub trait Drawer {
-    fn draw(terrains: Vec<Box<Terrain>>) -> &str;
+    fn draw(&self, filename: String, size: u32, terrains: Vec<Box<Terrain>>) -> String;
 }

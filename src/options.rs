@@ -9,7 +9,7 @@ pub struct Options {
     seed: u32,
 
     /// Define how to map should be smoothed
-    #[structopt(short = "o", long = "octaves", default_value="3")]
+    #[structopt(short = "o", long = "octaves", default_value="6")]
     octaves: u8,
 
     /// Define the map side length
